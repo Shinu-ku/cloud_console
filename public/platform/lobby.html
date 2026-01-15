@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Lobby | Cloud Console</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="container">
+    <h1>Room Code</h1>
+    <div id="roomCode" class="code">----</div>
+
+    <div id="qr"></div>
+    <button id="copyLinkBtn">Copy Join Link</button>
+    <p>Players Connected: <span id="playerCount">0</span></p>
+
+
+    <h3>Input Test</h3>
+    <div id="inputLog" class="log">Waiting for input...</div>
+
+
+    <button disabled>Start Game (Coming Soon)</button>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+  <script src="platform.js"></script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Cloud Console</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="container">
+    <h1>🎮 Cloud Console</h1>
+
+    <button id="createRoomBtn">Create Room</button>
+
+    <div class="join-box">
+      <input id="roomInput" placeholder="Enter Room Code" maxlength="4" />
+      <button id="joinRoomBtn">Join Room</button>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="platform.js"></script>
+</body>
+</html>

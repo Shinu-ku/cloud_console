@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Cloud Console Controller</title>
+  <link rel="stylesheet" href="controller.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body>
+
+  <div class="container">
+    <h2>🎮 Controller</h2>
+    <p id="status">Connecting...</p>
+
+    <div class="buttons">
+      <button data-action="left">⬅</button>
+      <button data-action="right">➡</button>
+      <button data-action="jump">⬆</button>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="controller.js"></script>
+</body>
+</html>
