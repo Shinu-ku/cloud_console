@@ -5,7 +5,7 @@ const { Server } = require("socket.io");
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
-
+const MAX_PLAYERS = 4;
 const PORT = 3000;
 
 // Serve static files
@@ -48,20 +48,35 @@ io.on("connection", (socket) => {
 
 
   // JOIN ROOM
-  socket.on("join-room", (roomCode) => {
+  socket.on("join-room", ({ roomCode, role }) => {
     roomCode = roomCode.toUpperCase();
+    const room = rooms[roomCode];
 
-    if (!rooms[roomCode]) {
+    if (!room) {
       socket.emit("error-message", "Room does not exist");
       return;
     }
 
-    socket.join(roomCode);
-    rooms[roomCode].players.push(socket.id);
+    // HOST JOIN (does NOT count)
+    if (role === "host") {
+      socket.join(roomCode);
+      console.log(`Host joined room ${roomCode}`);
+      return;
+    }
 
-    io.to(roomCode).emit("player-count", rooms[roomCode].players.length);
-    console.log(`Player joined room ${roomCode}`);
+    // CONTROLLER JOIN (counts)
+    if (room.players.length >= MAX_PLAYERS) {
+      socket.emit("error-message", "Room is full (max 4 players)");
+      return;
+    }
+
+    socket.join(roomCode);
+    room.players.push(socket.id);
+    socket.emit("player-accepted");
+    io.to(roomCode).emit("player-count", room.players.length);
+    console.log(`Controller joined ${roomCode} (${room.players.length}/4)`);
   });
+
 
   // DISCONNECT
   socket.on("disconnect", () => {

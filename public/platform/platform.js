@@ -36,10 +36,14 @@ const room = params.get("room");
 
 if (room && roomCodeEl) {
   roomCodeEl.textContent = room;
-  socket.emit("join-room", room);
+  socket.emit("join-room", {
+    roomCode: room,
+    role: "host"
+  });
 
   const qr = new QRCode(qrEl, {
-    text: `${window.location.origin}/controller/controller.html?room=${room}`,
+    text: `http://10.12.10.26:3000/controller/controller.html?room=${room}`,
+    //text: `${window.location.origin}/controller/controller.html?room=${room}`,
     width: 200,
     height: 200,
   });
