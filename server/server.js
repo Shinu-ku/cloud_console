@@ -43,8 +43,20 @@ io.on("connection", (socket) => {
   });
 
   socket.on("controller-input", (data) => {
+    const room = rooms[data.room];
+    if (!room) return;
+  
+    const isController = room.players.includes(socket.id);
+    const isKeyboard = data.source === "keyboard";
+  
+    // allow input if:
+    // - controller player
+    // - OR host keyboard
+    if (!isController && !isKeyboard) return;
+  
     socket.to(data.room).emit("controller-input", data);
   });
+  
 
 
   // JOIN ROOM

@@ -43,3 +43,43 @@ buttons.forEach((btn) => {
     });
   });
 });
+// 🎹 KEYBOARD INPUT (CONTROLLER)
+window.addEventListener("keydown", (e) => {
+  if (!isAllowed) return;
+
+  let action = null;
+
+  switch (e.key) {
+    case "ArrowLeft":
+    case "a":
+    case "A":
+      action = "left";
+      break;
+
+    case "ArrowRight":
+    case "d":
+    case "D":
+      action = "right";
+      break;
+
+    case "ArrowUp":
+    case "w":
+    case "W":
+      action = "jump";
+      break;
+
+    case "ArrowDown":
+    case "s":
+    case "S":
+      action = "down";
+      break;  
+  }
+
+  if (action) {
+    e.preventDefault();
+    socket.emit("controller-input", {
+      room,
+      action
+    });
+  }
+});

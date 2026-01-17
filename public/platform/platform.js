@@ -1,12 +1,22 @@
-const socket = io();
+const BASE_URL = "http://10.12.10.26:3000";
 
+const socket = io();
 const createBtn = document.getElementById("createRoomBtn");
 const joinBtn = document.getElementById("joinRoomBtn");
 const roomInput = document.getElementById("roomInput");
-
 const roomCodeEl = document.getElementById("roomCode");
 const playerCountEl = document.getElementById("playerCount");
 const qrEl = document.getElementById("qr");
+
+let isAllowed = false;
+
+window.addEventListener("keydown", (e) => {
+  console.log("KEY PRESSED:", e.key);
+});
+window.focus();
+document.body.tabIndex = 0;
+document.body.focus();
+
 
 // CREATE ROOM
 if (createBtn) {
@@ -40,9 +50,9 @@ if (room && roomCodeEl) {
     roomCode: room,
     role: "host"
   });
-
+  isAllowed = true;
   const qr = new QRCode(qrEl, {
-    text: `http://10.12.10.26:3000/controller/controller.html?room=${room}`,
+    text: `${BASE_URL}/controller/controller.html?room=${room}`,
     //text: `${window.location.origin}/controller/controller.html?room=${room}`,
     width: 200,
     height: 200,
@@ -64,7 +74,8 @@ socket.on("error-message", (msg) => {
 const copyBtn = document.getElementById("copyLinkBtn");
 
 if (copyBtn && room) {
-  const joinLink = `${window.location.origin}/controller/controller.html?room=${room}`;
+  //const joinLink = `${window.location.origin}/controller/controller.html?room=${room}`;
+  const joinLink = `${BASE_URL}/controller/controller.html?room=${room}`;
 
   copyBtn.onclick = async () => {
     try {
